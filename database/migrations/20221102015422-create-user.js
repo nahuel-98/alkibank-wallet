@@ -28,8 +28,14 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING
       },  
-      roleId: {
-        type: Sequelize.INTEGER
+      roleId:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Roles',
+          key:'id'
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
       },
       deletedAt: {
         type: Sequelize.STRING
