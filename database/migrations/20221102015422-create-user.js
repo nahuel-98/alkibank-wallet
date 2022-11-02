@@ -9,20 +9,31 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       lastName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       avatar: {
         type: Sequelize.STRING
+      },  
+      roleId: {
+        type: Sequelize.INTEGER
       },
+      deletedAt: {
+        type: Sequelize.STRING
+      },    
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

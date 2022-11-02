@@ -10,6 +10,7 @@
     "url": "https://github.com/gabodmc/nodejs-boilerplate"
   },
   "scripts": {
+    "dev": "nodemon app.js",
     "start": "node app.js",
     "test": "mocha ./test/*.js"
   },
