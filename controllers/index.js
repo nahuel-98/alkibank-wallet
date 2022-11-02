@@ -21,4 +21,21 @@ module.exports = {
       next(httpError)
     }
   }),
+  post: catchAsync(async (req, res, next) => {
+    try {
+      const { name } = req.body;
+      const test = await Test.create({ name });
+      endpointResponse({
+        res,
+        message: 'Test retrieved successfully',
+        body: test,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving index] - [index - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
 }
