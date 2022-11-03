@@ -63,16 +63,74 @@ module.exports = {
         email,
         password: encryptPassword,
       });
-      console.log(response);
       endpointResponse({
         res,
-        message: "User retrieved successfully",
+        message: "User created",
         body: response,
       });
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
         `[Error retrieving /users] - [user - POST]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
+
+  editUser: catchAsync(async (req, res, next) => {
+    try {
+      const { firstName, lastName, email } = req.body;
+      const id = req.params.id;
+      const userFind = await User.findAll({
+        where: { id: id },
+      });
+      if (userFind[0] == null) {
+        throw new ErrorObject("ID provided not existing", 404);
+      }
+      await User.update(
+        { firstName, lastName, email },
+        {
+          where: { id: id },
+        }
+      );
+      const response = await User.findAll({
+        where: { id: id },
+        attributes: ["firstName", "lastName", "email"],
+      });
+      endpointResponse({
+        res,
+        message: "User edited",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving /users] - [user - PUT]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
+  deleteUser: catchAsync(async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const response = await User.findAll({
+        where: { id: id },
+      });
+      if (response[0] == null) {
+        throw new ErrorObject("ID provided not existing", 404);
+      }
+      await User.destroy({
+        where: { id: id },
+      });
+      endpointResponse({
+        res,
+        message: "User eliminated",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving /users/id] - [user - DELETED]: ${error.message}`
       );
       next(httpError);
     }
