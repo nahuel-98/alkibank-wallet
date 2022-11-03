@@ -17,7 +17,26 @@ module.exports = {
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving index] - [index - GET]: ${error.message}`
+        `[Error retrieving /users] - [user - GET]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
+  idUser: catchAsync(async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const response = await User.findAll({
+        where: { id: id },
+      });
+      endpointResponse({
+        res,
+        message: "User retrieved successfully",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving /users/id] - [user - GET]: ${error.message}`
       );
       next(httpError);
     }
