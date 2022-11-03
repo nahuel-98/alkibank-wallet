@@ -1,7 +1,7 @@
 const express = require("express");
 const { get, post } = require("../controllers/index");
 const {
-  allCategories,
+//   allCategories,
   getCategory,
   postCategory,
   updateCategory,
@@ -17,7 +17,7 @@ router.get("/", get);
 router.post("/", validate(testSchema), post);
 
 //Crud - Categorias
-router.get("/category", allCategories);
+// router.get("/category", allCategories);
 router.get("/category/:id", getCategory);
 router.post("/category", validate(categorySchema), postCategory);
 router.patch("/category/:id", validate(categorySchema), updateCategory);
