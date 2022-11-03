@@ -11,14 +11,14 @@ const userSchema = require("../schemas/userSchema");
 
 const router = express.Router();
 
-router.get("/users", allUsers);
+router.get("", allUsers);
 
-router.get("/users/:id", idUser);
+router.get("/:id", idUser);
 
-router.post("/users", validate(userSchema), createUser);
+router.post("", validate(userSchema), createUser);
 
-router.put("/users/:id", editUser);
+router.put("/:id", editUser);
 
-router.delete("/users/:id", deleteUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;
