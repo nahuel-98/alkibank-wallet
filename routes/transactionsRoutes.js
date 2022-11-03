@@ -15,7 +15,7 @@ router.post("/", transactionsController.transactionCreate);
 router.delete("/:id", transactionsController.transactionDelete);
 
 //update
-router.patch("/:id", transactionsController.transactionUpdate);
+router.put("/:id", transactionsController.transactionUpdate);
 
 
 module.exports = router;

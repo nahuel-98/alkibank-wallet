@@ -1,82 +1,126 @@
 const DB = require("./../database/models");
 
+const { endpointResponse } = require("../helpers/success")
+const { catchAsync } = require('../helpers/catchAsync')
+const createHttpError = require('http-errors')
+
 //CRUD pattern
-const transactionsController={
-
+const transactionsController = {
     //Read
-    transactionList: (req, res)=>{
-        DB.transaction.findAll()
-        .then(list=>{
-            res.status(200).json(list)
-        })
-        .catch(err=>{
-            res.status(500).json({msg: err.messege})
-        })
-    },
+    transactionList: catchAsync(async (req, res, next) => {
+        try {
 
+            const response = await DB.transaction.findAll()
+            endpointResponse({
+                res,
+                message: 'transactions recived succefull',
+                body: response,
+            })
+
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        }
+    }),
+    
     //Detail
-    transactionDetail: (req, res)=>{
-        const transactionId = req.params.id
-        DB.transaction.findById(transactionId)
-        .then(transaction=>{
-            res.status(200).json(transaction);
-        })
-        .catch(err=>{
-            res.status(500).json({msg: err.messege})
-        })
-    },
+    transactionDetail: catchAsync(async (req, res, next) => {
+        try {
+            const transactionId = req.params.id
+            const response = await DB.transaction.findById(transactionId)
+
+            endpointResponse({
+                res,
+                message: 'transaction recived succefull',
+                body: response,
+            })
+
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        } 
+    }),
 
     //Create
-    transactionCreate: (req, res)=>{
-        const transaction = {
-            description: req.body.description,
-            amount: req.body.amount,
-            userId: req.body.userId,
-            categoryId: req.body.categoryId,
-            date: req.body.date
-        }
+    transactionCreate: catchAsync(async (req, res, next) => {
+        try {
+            const transaction = {
+                            description: req.body.description,
+                            amount: req.body.amount,
+                            userId: req.body.userId,
+                            categoryId: req.body.categoryId,
+                            date: req.body.date
+                        }
+            const response = await DB.transaction.create(transaction)
+            endpointResponse({
+                res,
+                message: 'transactions created succefull',
+                body: response,
+            })
 
-        DB.transaction.create(transaction)
-        .then(()=>{
-            res.status(200).json({msg: "created succefull"})
-        })
-        .catch(err=>{
-            res.status(500).json({msg: err.messege})
-        })
-    },
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        }
+    }),
 
     //Delete
-    transactionDelete: (req, res)=>{
-        const transactionId= req.params.id
+    transactionDelete:catchAsync(async (req, res, next) => {
+        try {
+            const transactionId = req.params.id
 
-        DB.transaction.destroy({where: {id: transactionId}})
-        .then(()=>{
-            res.status(200).json({msg: "deleted succefull"})
-        })
-        .catch(err=>{
-            res.status(500).json({msg: err.messege})
-        })
-    },
+            const response = await DB.transaction.destroy({ where: { id: transactionId } })
+            endpointResponse({
+                res,
+                message: 'transactions deleted succefull',
+                body: response,
+            })
+
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        }
+    }),
 
     //Update
-    transactionUpdate: (req, res)=>{
-        const transactionId= req.params.id
-        const transaction = {
-            description: req.body.description,
-            amount: req.body.amount,
-            userId: req.body.userId,
-            categoryId: req.body.categoryId,
-            date: req.body.date
-        }
+    transactionUpdate: catchAsync(async (req, res, next) => {
+        try {
+            const transactionId = req.params.id
+            const transaction = {
+                        description: req.body.description,
+                        amount: req.body.amount,
+                        userId: req.body.userId,
+                        categoryId: req.body.categoryId,
+                        date: req.body.date
+                    }
 
-        DB.transaction.update(transaction, {where: {id: transactionId}})
-        .then(()=>{
-            res.status(200).json({msg: "updated succefull"})
-        })
-        .catch(err=>{
-            res.status(500).json({msg: err.messege})
-        })
-    }
+            const response = await DB.transaction.update(transaction, { where: { id: transactionId } })
+            endpointResponse({
+                res,
+                message: 'transactions updated succefull',
+                body: response,
+            })
+
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        }
+    })
 }
 
 module.exports = transactionsController
