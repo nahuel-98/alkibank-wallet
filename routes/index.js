@@ -11,6 +11,6 @@ router.get("/", get);
 // example of a route with index controller post function
 router.post("/", validate(testSchema), post);
 
-router.use("/", categoriesRouter);
+router.use("/category", categoriesRouter);
 
 module.exports = router;

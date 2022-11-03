@@ -12,8 +12,8 @@ const router = express.Router();
 
 //Crud - Categorias
 // router.get("/category", allCategories);
-router.get("/category/:id", getCategory);
-router.post("/category", validate(categorySchema), postCategory);
-router.patch("/category/:id", validate(categorySchema), updateCategory);
+router.get("/:id", getCategory);
+router.post("/", validate(categorySchema), postCategory);
+router.patch("/:id", validate(categorySchema), updateCategory);
 
 module.exports = router;
