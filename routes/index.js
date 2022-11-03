@@ -10,4 +10,7 @@ router.get('/', get)
 // example of a route with index controller post function
 router.post('/', validate(testSchema), post)
 
+const transactionsRoutes=require("./transactionsRoutes")
+router.use("/transactions",transactionsRoutes)
+
 module.exports = router
