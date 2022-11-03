@@ -50,13 +50,7 @@ module.exports = {
   createUser: catchAsync(async (req, res, next) => {
     try {
       const { firstName, lastName, email, password } = req.body;
-      const encryptPassword = await Security.encryptPassword(password);
-      const isEmail = await User.findAll({
-        where: { email },
-      });
-      if (isEmail[0] != null) {
-        throw new ErrorObject("Email provided already existing", 409);
-      }
+      const encryptPassword = await Security.encryptPassword(password);      
       const response = await User.create({
         firstName,
         lastName,
