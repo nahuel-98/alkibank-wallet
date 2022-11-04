@@ -3,6 +3,7 @@ const { get, post } = require("../controllers/index");
 const { validate } = require("../middlewares");
 const { testSchema } = require("../schemas");
 const userRouter = require("./user-routes");
+const categoriesRouter = require("./categories");
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.get("/", get);
 router.post("/", validate(testSchema), post);
 
 router.use("/users", userRouter);
+router.use("/category", categoriesRouter);
 
 module.exports = router;
