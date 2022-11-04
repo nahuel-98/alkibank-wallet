@@ -20,7 +20,6 @@ module.exports = {
                     message: 'User does not exist',
                     body: { ok: false },
                 });
-                return;
             }
 
             if (!await Security.compare(password, user.password)) {
@@ -30,7 +29,6 @@ module.exports = {
                     message: 'Invalid password',
                     body: { ok: false },
                 });
-                return;
             }
 
             endpointResponse({
@@ -38,7 +36,6 @@ module.exports = {
                 message: 'User login successfully',
                 body: { ok: true },
             });
-            return;
         } catch (error) {
             const httpError = createHttpError(
                 error.statusCode,
