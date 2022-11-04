@@ -8,17 +8,18 @@ const {
 } = require("../controllers/user-controller");
 const validate = require("../middlewares/validator");
 const userSchema = require("../schemas/userSchema");
+const checkUserId = require("../middlewares/checkUserId");
 
 const router = express.Router();
 
 router.get("", allUsers);
 
-router.get("/:id", idUser);
+router.get("/:id", checkUserId, idUser);
 
 router.post("", validate(userSchema), createUser);
 
-router.put("/:id", editUser);
+router.put("/:id", checkUserId, editUser);
 
-router.delete("/:id", deleteUser);
+router.delete("/:id", checkUserId, deleteUser);
 
 module.exports = router;
