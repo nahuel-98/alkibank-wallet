@@ -101,4 +101,35 @@ module.exports = {
       next(httpError);
     }
   }),
+
+  deleteCategory: catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const category = await Category.findByPk(id);
+      if (category) {
+        await category.destroy({
+          where: {id}
+        });
+        // await category.save();
+
+        endpointResponse({
+          res,
+          message: "Category deleted successfully",
+          body: category,
+        });
+      }
+      const httpError = createHttpError(
+        404,
+        `[Error retrieving Category] - [Category - GET]: ${"Category not found"}`
+      );
+      next(httpError);
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving Category] - [Category - GET]: ${error.message}`
+      );
+      next(httpError);
+    }
+  })
 };
