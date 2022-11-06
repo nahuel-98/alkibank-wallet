@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING
   }, {
     sequelize,
+    timestamps: true,
     modelName: 'Category',
   });
   return Category;
