@@ -9,6 +9,10 @@ class Security {
       console.log(e);
     }
   }
+
+  static async compare(password, passwordHash) {
+    return bcrypt.compare(password, passwordHash);
+  }
 }
 module.exports = {
   Security,
