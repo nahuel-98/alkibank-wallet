@@ -3,6 +3,7 @@ const { get, post } = require("../controllers/index");
 const { validate } = require("../middlewares");
 const { testSchema } = require("../schemas");
 const userRouter = require("./user-routes");
+const imagesRouter = require("./images.routes.js")
 const categoriesRouter = require("./categories");
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.post("/", validate(testSchema), post);
 
 router.use("/users", userRouter);
 router.use("/category", categoriesRouter);
+router.use("/images" , imagesRouter);
 
 module.exports = router;

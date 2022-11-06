@@ -4,6 +4,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
+const multer = require('multer');
 require('dotenv').config()
 
 const indexRouter = require('./routes/index')
@@ -36,6 +37,23 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
+
+//multer, service for uploading images
+app.use(multer({
+  dest: path.join(__dirname, 'public/uploads'),
+  fileFilter: function (req, file, cb) {
+
+      var filetypes = /svg|jpg|png|webp/;
+      var mimetype = filetypes.test(file.mimetype);
+      var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+      if (mimetype && extname) {
+          return cb(null, true);
+      }
+      cb("Error: File upload only supports the following filetypes - " + filetypes);
+  },
+  limits: {fileSize: 2000000},
+}).single('image'));
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
