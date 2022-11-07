@@ -12,13 +12,32 @@ const indexRouter = require('./routes/index')
 const port = process.env.PORT || 3000
 
 const app = express()
+
+
 app.use(cors())
 
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+//multer, service for uploading images
+app.use(multer({
+  dest: path.join(__dirname, 'public/uploads'),
+  fileFilter: function (req, file, cb) {
+
+      var filetypes = /svg|jpg|png|webp/;
+      var mimetype = filetypes.test(file.mimetype);
+      var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+      if (mimetype && extname) {
+          return cb(null, true);
+      }
+      cb("Error: File upload only supports the following filetypes - " + filetypes);
+  },
+  limits: {fileSize: 2000000},
+}).single('image'));
 
 app.use('/', indexRouter)
 
@@ -38,22 +57,7 @@ app.use((err, req, res) => {
   res.render('error')
 })
 
-//multer, service for uploading images
-app.use(multer({
-  dest: path.join(__dirname, 'public/uploads'),
-  fileFilter: function (req, file, cb) {
 
-      var filetypes = /svg|jpg|png|webp/;
-      var mimetype = filetypes.test(file.mimetype);
-      var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-      if (mimetype && extname) {
-          return cb(null, true);
-      }
-      cb("Error: File upload only supports the following filetypes - " + filetypes);
-  },
-  limits: {fileSize: 2000000},
-}).single('image'));
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
