@@ -27,13 +27,7 @@ module.exports = {
   }),
   idUser: catchAsync(async (req, res, next) => {
     try {
-      const id = req.params.id;
-      const response = await User.findAll({
-        where: { id: id },
-      });
-      if (response[0] == null) {
-        throw new ErrorObject("ID provided not existing", 404);
-      }
+      const response = await User.findByPk(req.params.id);
       endpointResponse({
         res,
         message: "User retrieved successfully",
@@ -50,7 +44,7 @@ module.exports = {
   createUser: catchAsync(async (req, res, next) => {
     try {
       const { firstName, lastName, email, password } = req.body;
-      const encryptPassword = await Security.encryptPassword(password);      
+      const encryptPassword = await Security.encryptPassword(password);
       const response = await User.create({
         firstName,
         lastName,
@@ -75,12 +69,7 @@ module.exports = {
     try {
       const { firstName, lastName, email } = req.body;
       const id = req.params.id;
-      const userFind = await User.findAll({
-        where: { id: id },
-      });
-      if (userFind[0] == null) {
-        throw new ErrorObject("ID provided not existing", 404);
-      }
+
       await User.update(
         { firstName, lastName, email },
         {
@@ -107,12 +96,6 @@ module.exports = {
   deleteUser: catchAsync(async (req, res, next) => {
     try {
       const id = req.params.id;
-      const response = await User.findAll({
-        where: { id: id },
-      });
-      if (response[0] == null) {
-        throw new ErrorObject("ID provided not existing", 404);
-      }
       await User.destroy({
         where: { id: id },
       });
