@@ -7,6 +7,9 @@ class JWT {
    * @param {*} secretWorld it is recommended that it be an environment variable
    */
   static encode(dataForToken, secretWorld) {
+    if (!dataForToken || !secretWorld) {
+      throw new Error("Arguments missing");
+    }
     return jwt.sign(dataForToken, secretWorld);
   }
 
