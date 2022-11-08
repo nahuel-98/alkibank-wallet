@@ -26,18 +26,15 @@ module.exports = {
     const { id } = req.params;
     try {
       const category = await Category.findByPk(id);
-      if (category) {
-        endpointResponse({
-          res,
-          message: "Category retrieved successfully",
-          body: category,
-        });
+      if (!category) {
+        const httpError = createHttpError(404, "Category not found");
+        return next(httpError);
       }
-      const httpError = createHttpError(
-        404,
-        `[Error retrieving Category] - [Category - GET]: ${"Category not found"}`
-      );
-      next(httpError);
+      endpointResponse({
+        res,
+        message: "Category retrieved successfully",
+        body: category,
+      });
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
@@ -75,24 +72,22 @@ module.exports = {
     const { name, description } = req.body;
     try {
       const category = await Category.findByPk(id);
-      if (category) {
-        await category.update({
-          name,
-          description,
-        });
-        await category.save();
 
-        endpointResponse({
-          res,
-          message: "Category update successfully",
-          body: category,
-        });
+      if (!category) {
+        const httpError = createHttpError(404, "Category not found");
+        return next(httpError);
       }
-      const httpError = createHttpError(
-        404,
-        `[Error retrieving Category] - [Category - GET]: ${"Category not found"}`
-      );
-      next(httpError);
+      await category.update({
+        name,
+        description,
+      });
+      await category.save();
+
+      endpointResponse({
+        res,
+        message: "Category update successfully",
+        body: category,
+      });
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
