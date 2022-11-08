@@ -5,14 +5,13 @@ const { catchAsync } = require("../helpers/catchAsync");
 const { ErrorObject } = require("../helpers/error");
 const { Security } = require("../config/security");
 const { response } = require("express");
+const createUrlPreviousAndNext = require("../utils/create-url-previous-next");
 
 module.exports = {
   allUsers: catchAsync(async (req, res, next) => {
     try {
-      const page = Number(req.query.page) || 0;
       const limit = 10;
-      let url = req.protocol + "://" + req.get("host") + req.baseUrl;
-
+      const page = Number(req.query.page) || 0;
       let [response, countPages] = await Promise.all([
         User.findAll({
           attributes: ["firstname", "lastname", "email", "createdAt"],
@@ -23,22 +22,13 @@ module.exports = {
         User.count(),
       ]);
 
-      countPages = countPages > limit ? Math.round(countPages / limit) : 0;
-
-      let previous = page > 0 ? url + "?page=" + (page - 1) : null;
-      previous = page - 1 > countPages ? url + "?page=" + countPages : previous;
-
-      let next = page < countPages ? url + "?page=" + (page + 1) : null;
-
-      previous =
-        previous != null ? new URL(previous, url).href : "No previous page";
-      next = next != null ? new URL(next, url).href : "No next page";
+      const options = createUrlPreviousAndNext(limit, countPages, page, req);
 
       endpointResponse({
         res,
         message: "User retrieved successfully",
         body: response,
-        options: { previousPage: previous, nextPage: next },
+        options: options,
       });
     } catch (error) {
       const httpError = createHttpError(
