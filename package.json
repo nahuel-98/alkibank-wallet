@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "test": "mocha ./test/*.js"
+    "test:migrate": "NODE_ENV=test npx sequelize-cli db:migrate",
+    "test": "NODE_ENV=test mocha ./tests/*.js"
   },
   "engines": {
     "node": ">=0.14"
