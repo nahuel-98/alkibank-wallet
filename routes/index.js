@@ -15,6 +15,6 @@ router.post("/", validate(testSchema), post);
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/category", categoriesRouter);
+router.use("/categories", categoriesRouter);
 
 module.exports = router;
