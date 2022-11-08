@@ -37,13 +37,11 @@ describe("Alkybank Wallet", () => {
     describe("POST /categories", () => {
       it("Se espera un status 200, sino falta el nombre", async () => {
         const success = {
-          id: 2,
           name: "Entretenimiento",
           description: "Netflix, Disney +...",
         };
 
         const error = {
-          id: 3,
           description: "ErrorObject",
         };
 
