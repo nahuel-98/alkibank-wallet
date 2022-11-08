@@ -3,6 +3,7 @@ const { get, post } = require("../controllers/index");
 const { validate } = require("../middlewares");
 const { testSchema } = require("../schemas");
 const userRouter = require("./user-routes");
+const imagesRouter = require("./images.routes.js")
 const categoriesRouter = require("./categories");
 const transactionsRoutes = require("./transactionsRoutes");
 const authRouter = require("./auth");
@@ -18,5 +19,6 @@ router.use("/transactions",transactionsRoutes);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
 router.use("/category", categoriesRouter);
+router.use("/images" , imagesRouter);
 
 module.exports = router;
