@@ -11,7 +11,7 @@ const {
 const router = express.Router();
 
 //Crud - Categorias
-router.get("/category", allCategories);
+router.get("/", allCategories);
 router.get("/:id", getCategory);
 router.post("/", validate(categorySchema), postCategory);
 router.patch("/:id", validate(categorySchema), updateCategory);
