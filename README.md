@@ -21,10 +21,38 @@ npx sequelize db:create
 ```
 npx sequelize db:migrate
 ```
+### Correr seeders con datos de prueba
+```
+npx sequelize-cli db:seed:all
+```
 ### Borrar la base de datos que creamos
 ```
 npx sequelize db:drop
 ``` 
+
+### Usuarios de prueba:
+| firstName  | lastName     | email                        | password | role  |
+|------------|--------------|------------------------------|----------|-------|
+| Mohammed   | Haag         | reinhold83@example.com       | password | ADMIN |
+| Gregoria   | Durgan       | jace.kuvalis@example.net     | password | ADMIN |
+| Frieda     | Langosh      | tiana01@example.net          | password | ADMIN |
+| Houston    | Bartoletti   | fkuhic@example.net           | password | ADMIN |
+| Brett      | Christiansen | wdamore@example.org          | password | ADMIN |
+| Rebekah    | Cormier      | bryana.schmidt@example.org   | password | ADMIN |
+| Amir       | Ritchie      | hettinger.sasha@example.net  | password | ADMIN |
+| Weldon     | Aufderhar    | elwyn.brakus@example.org     | password | ADMIN |
+| Herminia   | Zemlak       | emery.swaniawski@example.com | password | ADMIN |
+| Antonietta | Abbott       | swift.claud@example.net      | password | ADMIN |
+| Arlo       | Wunsch       | alison.halvorson@example.org | password | USER  |
+| Judy       | Bauch        | xabshire@example.com         | password | USER  |
+| Adolph     | Shields      | tyrese.torphy@example.org    | password | USER  |
+| Audreanne  | Treutel      | casimer87@example.org        | password | USER  |
+| Florine    | Heller       | antwon.kunze@example.org     | password | USER  |
+| Dariana    | Waters       | volkman.karli@example.com    | password | USER  |
+| Juliana    | Stiedemann   | rjohnston@example.net        | password | USER  |
+| Neva       | Langworth    | rudolph76@example.org        | password | USER  |
+| Eli        | Bauch        | payton.beatty@example.net    | password | USER  |
+| Kristy     | Dickens      | berge.lesley@example.net     | password | USER  |
 
 ## 🏗 Algunos datos del proyecto:
 - La estructura de carpetas es del patron MVC

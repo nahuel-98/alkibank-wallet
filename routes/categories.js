@@ -6,6 +6,7 @@ const {
   getCategory,
   postCategory,
   updateCategory,
+  deleteCategory
 } = require("../controllers/category.controller");
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get("/", allCategories);
 router.get("/:id", getCategory);
 router.post("/", validate(categorySchema), postCategory);
 router.patch("/:id", validate(categorySchema), updateCategory);
+router.delete("/:id", validate(categorySchema), deleteCategory)
 
 module.exports = router;
