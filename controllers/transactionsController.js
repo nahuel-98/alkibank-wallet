@@ -1,5 +1,4 @@
-const DB = require("./../database/models");
-
+const { Transaction } = require("../database/models");
 const { endpointResponse } = require("../helpers/success")
 const { catchAsync } = require('../helpers/catchAsync')
 const createHttpError = require('http-errors')
@@ -10,7 +9,7 @@ const transactionsController = {
     transactionList: catchAsync(async (req, res, next) => {
         try {
 
-            const response = await DB.transaction.findAll()
+            const response = await Transaction.findAll()
             endpointResponse({
                 res,
                 message: 'transactions recived succefull',
@@ -30,7 +29,7 @@ const transactionsController = {
     transactionDetail: catchAsync(async (req, res, next) => {
         try {
             const transactionId = req.params.id
-            const response = await DB.transaction.findById(transactionId)
+            const response = await Transaction.findById(transactionId)
 
             endpointResponse({
                 res,
@@ -57,7 +56,7 @@ const transactionsController = {
                             categoryId: req.body.categoryId,
                             date: req.body.date
                         }
-            const response = await DB.transaction.create(transaction)
+            const response = await Transaction.create(transaction)
             endpointResponse({
                 res,
                 message: 'transactions created succefull',
@@ -78,7 +77,7 @@ const transactionsController = {
         try {
             const transactionId = req.params.id
 
-            const response = await DB.transaction.destroy({ where: { id: transactionId } })
+            const response = await Transaction.destroy({ where: { id: transactionId } })
             endpointResponse({
                 res,
                 message: 'transactions deleted succefull',
@@ -106,7 +105,7 @@ const transactionsController = {
                         date: req.body.date
                     }
 
-            const response = await DB.transaction.update(transaction, { where: { id: transactionId } })
+            const response = await Transaction.update(transaction, { where: { id: transactionId } })
             endpointResponse({
                 res,
                 message: 'transactions updated succefull',
