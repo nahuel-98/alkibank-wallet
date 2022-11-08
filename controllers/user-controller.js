@@ -9,13 +9,36 @@ const { response } = require("express");
 module.exports = {
   allUsers: catchAsync(async (req, res, next) => {
     try {
-      const response = await User.findAll({
-        attributes: ["firstname", "lastname", "email", "createdAt"],
-      });
+      const page = Number(req.query.page) || 0;
+      const limit = 10;
+      let url = req.protocol + "://" + req.get("host") + req.baseUrl;
+
+      let [response, countPages] = await Promise.all([
+        User.findAll({
+          attributes: ["firstname", "lastname", "email", "createdAt"],
+          limit,
+          offset: page * limit,
+        }),
+
+        User.count(),
+      ]);
+
+      countPages = countPages > limit ? Math.round(countPages / limit) : 0;
+
+      let previous = page > 0 ? url + "?page=" + (page - 1) : null;
+      previous = page - 1 > countPages ? url + "?page=" + countPages : previous;
+
+      let next = page < countPages ? url + "?page=" + (page + 1) : null;
+
+      previous =
+        previous != null ? new URL(previous, url).href : "No previous page";
+      next = next != null ? new URL(next, url).href : "No next page";
+
       endpointResponse({
         res,
         message: "User retrieved successfully",
         body: response,
+        options: { previousPage: previous, nextPage: next },
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -50,7 +73,7 @@ module.exports = {
   createUser: catchAsync(async (req, res, next) => {
     try {
       const { firstName, lastName, email, password } = req.body;
-      const encryptPassword = await Security.encryptPassword(password);      
+      const encryptPassword = await Security.encryptPassword(password);
       const response = await User.create({
         firstName,
         lastName,
