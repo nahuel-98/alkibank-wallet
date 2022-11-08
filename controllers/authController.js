@@ -34,7 +34,10 @@ module.exports = {
       endpointResponse({
         res,
         message: "User login successfully",
-        body: { ok: true },
+        body: {
+          ok: true,
+          token: user.generateAuthToken()
+        },
       });
     } catch (error) {
       const httpError = createHttpError(
