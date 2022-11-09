@@ -35,7 +35,7 @@ const transactionsController = {
   transactionDetail: catchAsync(async (req, res, next) => {
     try {
       const transactionId = req.params.id;
-      const response = await Transaction.findById(transactionId);
+      const response = await Transaction.findByPk(transactionId);
 
       endpointResponse({
         res,
