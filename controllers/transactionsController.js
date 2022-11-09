@@ -9,7 +9,11 @@ const transactionsController = {
     transactionList: catchAsync(async (req, res, next) => {
         try {
 
-            const response = await Transaction.findAll()
+            const response = await Transaction.findAll({attributes:["id", "amount", "date"],
+                include:[
+                    {association:"User", attributes:["id", "firstName", "lastName"]},
+                    {association:"Category", attributes:["name"]}
+                ]})
             endpointResponse({
                 res,
                 message: 'transactions recived succefull',
