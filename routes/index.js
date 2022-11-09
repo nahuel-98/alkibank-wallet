@@ -1,16 +1,24 @@
-const express = require('express')
-const { get, post } = require('../controllers/index')
-const { validate } = require('../middlewares')
-const { testSchema } = require('../schemas')
+const express = require("express");
+const { get, post } = require("../controllers/index");
+const { validate } = require("../middlewares");
+const { testSchema } = require("../schemas");
+const userRouter = require("./user-routes");
+const imagesRouter = require("./images.routes.js")
+const categoriesRouter = require("./categories");
+const transactionsRoutes = require("./transactionsRoutes");
+const authRouter = require("./auth");
 
-const router = express.Router()
+const router = express.Router();
 
 // example of a route with index controller get function
-router.get('/', get)
+router.get("/", get);
 // example of a route with index controller post function
-router.post('/', validate(testSchema), post)
+router.post("/", validate(testSchema), post);
 
-const transactionsRoutes=require("./transactionsRoutes")
-router.use("/transactions",transactionsRoutes)
+router.use("/transactions",transactionsRoutes);
+router.use("/auth", authRouter);
+router.use("/users", userRouter);
+router.use("/category", categoriesRouter);
+router.use("/images" , imagesRouter);
 
-module.exports = router
+module.exports = router;
