@@ -9,12 +9,13 @@ const {
 const validate = require("../middlewares/validator");
 const userSchema = require("../schemas/userSchema");
 const checkUserId = require("../middlewares/checkUserId");
+const { ownership, auth } = require("../middlewares");
 
 const router = express.Router();
 
 router.get("", allUsers);
 
-router.get("/:id", checkUserId, idUser);
+router.get("/:id", [checkUserId, auth(), ownership()], idUser);
 
 router.post("", validate(userSchema), createUser);
 
