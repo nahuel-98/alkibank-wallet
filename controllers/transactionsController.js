@@ -8,8 +8,13 @@ const transactionsController = {
     //Read
     transactionList: catchAsync(async (req, res, next) => {
         try {
-
+            const query = req.query.userId
+            const where = {}
+            if(query){
+                where.userId = query
+            }
             const response = await Transaction.findAll({
+                where,
                 attributes:["id", "amount", "date", [sequelize.fn("CONCAT", "http://localhost:3000/transactions/", sequelize.col("transaction.id")),"detail"]],
                 include:[
                     {association:"User", attributes:["id", "firstName", "lastName",[sequelize.fn("CONCAT", "http://localhost:3000/users/", sequelize.col("user.id")),"detail"]]},
@@ -56,28 +61,6 @@ const transactionsController = {
             )
             next(httpError)
         } 
-    }),
-
-    transactionsUser:catchAsync(async (req, res, next) => {
-        try {
-            const userId= req.query.userId
-            const response = await User.findOne({
-                where:{userId},
-                include:[{"association":"transaction"}]
-            })
-            endpointResponse({
-                res,
-                message: 'transactions recived succefull',
-                body: response,
-            })
-
-        } catch (error) {
-            const httpError = createHttpError(
-                error.statusCode,
-                `[Error retrieving index] - [index - GET]: ${error.message}`,
-            )
-            next(httpError)
-        }
     }),
     //Create
     transactionCreate: catchAsync(async (req, res, next) => {
