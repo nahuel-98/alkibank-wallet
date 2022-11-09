@@ -1,7 +1,9 @@
 const express = require("express");
+const { validate } = require("../middlewares");
+const { transactionSchema } = require("../schemas");
 const router = express.Router()
 const transactionsController = require("./../controllers/transactionsController")
-const transactionValidatorMiddleware = require("./../middlewares/transactionValidatorMiddleware")
+
 //list
 router.get("/", transactionsController.transactionList);
 
@@ -10,8 +12,7 @@ router.get("/:id", transactionsController.transactionDetail);
 
 //create
 router.post("/",
-    transactionValidatorMiddleware.createForm,
-    transactionValidatorMiddleware.validationResults,
+    validate(transactionSchema),
     transactionsController.transactionCreate);
 
 //delete
