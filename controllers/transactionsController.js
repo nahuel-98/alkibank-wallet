@@ -1,4 +1,4 @@
-const { Transaction } = require("../database/models");
+const { Transaction, User, sequelize } = require("../database/models");
 const { endpointResponse } = require("../helpers/success")
 const { catchAsync } = require('../helpers/catchAsync')
 const createHttpError = require('http-errors')
@@ -9,9 +9,10 @@ const transactionsController = {
     transactionList: catchAsync(async (req, res, next) => {
         try {
 
-            const response = await Transaction.findAll({attributes:["id", "amount", "date"],
+            const response = await Transaction.findAll({
+                attributes:["id", "amount", "date", [sequelize.fn("CONCAT", "http://localhost:3000/transactions/", sequelize.col("transaction.id")),"detail"]],
                 include:[
-                    {association:"User", attributes:["id", "firstName", "lastName"]},
+                    {association:"User", attributes:["id", "firstName", "lastName",[sequelize.fn("CONCAT", "http://localhost:3000/users/", sequelize.col("user.id")),"detail"]]},
                     {association:"Category", attributes:["name"]}
                 ]})
             endpointResponse({
@@ -33,7 +34,14 @@ const transactionsController = {
     transactionDetail: catchAsync(async (req, res, next) => {
         try {
             const transactionId = req.params.id
-            const response = await Transaction.findById(transactionId)
+            const response = await Transaction.findOne({
+                where:{id: transactionId},
+                attributes:{exclude:["id","UserId","userId", "categoryId", "CategoryId"]},
+                include:[
+                    {"association":"User", attributes:["id", "firstName", "lastName", [sequelize.fn("CONCAT", "http://localhost:3000/users/", sequelize.col("user.id")),"detail"]]},
+                    {"association":"Category", attributes:["id", "name", "description"]}
+                ]
+            })
 
             endpointResponse({
                 res,
@@ -50,6 +58,27 @@ const transactionsController = {
         } 
     }),
 
+    transactionsUser:catchAsync(async (req, res, next) => {
+        try {
+            const userId= req.query.userId
+            const response = await User.findOne({
+                where:{userId},
+                include:[{"association":"transaction"}]
+            })
+            endpointResponse({
+                res,
+                message: 'transactions recived succefull',
+                body: response,
+            })
+
+        } catch (error) {
+            const httpError = createHttpError(
+                error.statusCode,
+                `[Error retrieving index] - [index - GET]: ${error.message}`,
+            )
+            next(httpError)
+        }
+    }),
     //Create
     transactionCreate: catchAsync(async (req, res, next) => {
         try {
