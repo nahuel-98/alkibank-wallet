@@ -4,23 +4,23 @@ class JWT {
   /**
    *
    * @param {*} dataForToken payload to encode
-   * @param {*} secretWorld it is recommended that it be an environment variable
+   * @param {*} secretWord it is recommended that it be an environment variable
    */
-  static encode(dataForToken, secretWorld) {
-    if (!dataForToken || !secretWorld) {
+  static encode(dataForToken, secretWord) {
+    if (!dataForToken || !secretWord) {
       throw new Error("Arguments missing");
     }
-    return jwt.sign(dataForToken, secretWorld);
+    return jwt.sign(dataForToken, secretWord);
   }
 
   /**
    *
    * @param {*} token the token previously generated with encode
-   * @param {*} secretWorld the secret word i use to encode
+   * @param {*} secretWord the secret word i use to encode
    */
-  static verify(token, secretWorld) {
+  static verify(token, secretWord) {
     try {
-      if (jwt.verify(token, secretWorld)) {
+      if (jwt.verify(token, secretWord)) {
         return "El token es valido";
       }
       return;
@@ -32,12 +32,12 @@ class JWT {
   /**
    *
    * @param {*} token the token previously generated with encode
-   * @param {*} secretWorld the secret word i use to encode
+   * @param {*} secretWord the secret word i use to encode
    */
-  static decode(token, secretWorld) {
+  static decode(token, secretWord) {
     let decodedToken;
     try {
-      decodedToken = jwt.verify(token, secretWorld);
+      decodedToken = jwt.verify(token, secretWord);
       return decodedToken;
     } catch (error) {
       throw Error("El token es invalido");
