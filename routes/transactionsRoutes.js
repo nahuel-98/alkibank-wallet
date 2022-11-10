@@ -1,5 +1,5 @@
 const express = require("express");
-const { validate } = require("../middlewares");
+const { validate, auth, ownershipTransaction } = require("../middlewares");
 const { transactionSchema } = require("../schemas");
 const router = express.Router()
 const transactionsController = require("./../controllers/transactionsController")
@@ -8,7 +8,7 @@ const transactionsController = require("./../controllers/transactionsController"
 router.get("/", transactionsController.transactionList);
 
 //detail
-router.get("/:id", transactionsController.transactionDetail);
+router.get("/:id", [auth(), ownershipTransaction()], transactionsController.transactionDetail);
 
 //create
 router.post("/",
