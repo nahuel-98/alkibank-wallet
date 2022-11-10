@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const {swaggerSpec} = require('./config/swagger')
+const multer = require('multer');
 require('dotenv').config()
 const port = process.env.PORT || 3000
 
@@ -15,15 +16,36 @@ const port = process.env.PORT || 3000
 const indexRouter = require('./routes/index')
 
 const app = express()
+app.use(cors())
+
 
 app.use(cors())
 app.use(bodyParser.json());
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerSpec)))
+
+//multer, service for uploading images
+app.use(multer({
+  dest: path.join(__dirname, 'public/uploads'),
+  fileFilter: function (req, file, cb) {
+
+      var filetypes = /svg|jpg|png|webp/;
+      var mimetype = filetypes.test(file.mimetype);
+      var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+      if (mimetype && extname) {
+          return cb(null, true);
+      }
+      cb("Error: File upload only supports the following filetypes - " + filetypes);
+  },
+  limits: {fileSize: 2000000},
+}).single('image'));
 
 app.use('/', indexRouter)
 
@@ -42,6 +64,8 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
+
+
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
