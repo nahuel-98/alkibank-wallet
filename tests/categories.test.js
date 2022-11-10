@@ -1,21 +1,7 @@
 const { server } = require("../app");
 const db = require("../database/models");
-const { Category } = require("../database/models");
-const { initialCategories } = require("../utils");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
-
-before(async () => {
-  await Category.destroy({
-    where: {},
-    truncate: {
-      cascade: true,
-    },
-  });
-
-  const category1 = await Category.create(initialCategories[0]);
-  await category1.save();
-});
 
 describe("Alkybank Wallet", () => {
   describe("Category", () => {
@@ -29,7 +15,7 @@ describe("Alkybank Wallet", () => {
     });
     describe("GET /categories/:id", () => {
       it("Se espera que se obtenga la categoria", async () => {
-        const response = await request.get(`/categories/${1}`);
+        const response = await request.get(`/categories/${59}`);
 
         expect(response.status).to.eql(200);
       });
@@ -62,7 +48,7 @@ describe("Alkybank Wallet", () => {
           description: "ErrorObject",
         };
 
-        const response = await request.patch(`/categories/${1}`).send(success);
+        const response = await request.patch(`/categories/${59}`).send(success);
 
         expect(response.status).to.eql(200);
       });
