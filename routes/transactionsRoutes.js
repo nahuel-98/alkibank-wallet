@@ -81,7 +81,7 @@ router.get("/", transactionsController.transactionList);
  *        schema:
  *          type: number
  *          required: true
- *          description: Category Id
+ *          description: Transaction Id
  *      - in: header
  *        name: x-access-token
  *        schema:
@@ -178,7 +178,7 @@ router.delete("/:id", transactionsController.transactionDelete);
  * @swagger
  * /Transactions/{id}:
  *  patch:
- *    summary: Edit Category
+ *    summary: Edit Transaction
  *    tags: [Transactions]
  *    parameters:
  *      - in: path
