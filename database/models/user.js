@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     generateAuthToken() {
       return JWT.encode({ id: this.id }, process.env.SECRET_WORD);
     }
+    isAdmin() {
+      return this.roleId === 1;
+    }
   };
   User.init({
     firstName: DataTypes.STRING,
