@@ -171,17 +171,18 @@ router.post("", validate(userSchema), createUser);
  *          schema:
  *            type: object
  *            properties:
- *              amount:
- *                  type: number
- *              description:
- *                  type: string
- *              userId:
- *                  type: number       
- *              categoryId:
- *                  type: number 
- *              date:
- *                  type: string
- *                  format: date-time
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              email:
+ *                type: string       
+ *              password:
+ *                type: string 
+ *              avatar:
+ *                type: string
+ *              roleId:
+ *                type: number 
  *    responses:
  *      200:
  *        description: User edited.
