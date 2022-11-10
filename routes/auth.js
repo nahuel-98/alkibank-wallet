@@ -6,5 +6,4 @@ const router = express.Router();
 
 router.post("/login", validate(loginSchema), login);
 
-
 module.exports = router;
