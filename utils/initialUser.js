@@ -4,6 +4,7 @@ const initialUser = [
     lastName: "Chavez",
     email: "pablooscarchavez@gmail.com",
     password: "prueba123",
+    roleId: 1,
   }
 ];
 
