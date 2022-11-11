@@ -13,14 +13,36 @@ const { ownership, auth } = require("../middlewares");
 
 const router = express.Router();
 
-router.get("", allUsers);
+router.get("", auth(), allUsers);
 
-router.get("/:id", [checkUserId, auth(), ownership()], idUser);
+router.get("/:id",
+  [
+    checkUserId,
+    auth(),
+    ownership()
+  ],
+  idUser
+);
 
 router.post("", validate(userSchema), createUser);
 
-router.put("/:id", checkUserId, editUser);
+router.put("/:id",
+  [
+    checkUserId,
+    validate(userSchema),
+    auth(),
+    ownership()
+  ],
+  editUser
+);
 
-router.delete("/:id", checkUserId, deleteUser);
+router.delete("/:id",
+  [
+    checkUserId,
+    auth(),
+    ownership()
+  ],
+  deleteUser
+);
 
 module.exports = router;

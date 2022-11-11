@@ -1,13 +1,15 @@
 const express = require("express");
-const { validate } = require("../middlewares");
+const { validate, ownership } = require("../middlewares");
 const { categorySchema } = require("../schemas");
 const {
+  allCategories,
   allCategories,
   getCategory,
   postCategory,
   updateCategory,
   deleteCategory,
 } = require("../controllers/category.controller");
+const checkUserId = require("../middlewares/checkUserId");
 
 const router = express.Router();
 
