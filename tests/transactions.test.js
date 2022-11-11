@@ -17,7 +17,7 @@ before(async () => {
 describe("Alkibank Wallet", () => {
   describe("Transactions", () => {
     describe("GET /transactions", () => {
-      it("Se espera que existan transacciones", async () => {
+      it("Se espera un status code 200 si existen transacciones", async () => {
         const response = await request
           .get(`/transactions`)
           .query({ query: 93 })
@@ -27,7 +27,7 @@ describe("Alkibank Wallet", () => {
       });
     });
     describe("GET /transactions/:id", () => {
-      it("Se espera encontrar la transaccion", async () => {
+      it("Se espera un status code 200 si se encuentra la transaccion", async () => {
         const response = await request
           .get(`/transactions/${190}`)
           .query({ query: 93 })
@@ -44,7 +44,7 @@ describe("Alkibank Wallet", () => {
         categoryId: 2,
         date: new Date(),
       };
-      it("Se espera crear la transaccion", async () => {
+      it("Se espera un status code 200 si se añade la transaccion", async () => {
         const response = await request
           .post("/transactions")
           .send(transaction)
@@ -61,7 +61,7 @@ describe("Alkibank Wallet", () => {
         categoryId: 1,
         date: new Date(),
       };
-      it("Se espera actualizar la transaccion", async () => {
+      it("Se espera un status code 200 si se actualiza la transaccion", async () => {
         const response = await request
           .patch(`/transactions/${196}`)
           .send(transaction)
@@ -71,7 +71,7 @@ describe("Alkibank Wallet", () => {
       });
     });
     xdescribe("DELETE /transactions", () => {
-      it("Se espera eliminar la transaccion", async () => {
+      it("Se espera un status code 200 si se elimina la transaccion", async () => {
         const response = await request
           .delete(`/transactions/${197}`)
           .set({ "x-auth-token": `${token}` });
