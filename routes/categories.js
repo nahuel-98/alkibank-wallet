@@ -3,7 +3,6 @@ const { validate, ownership } = require("../middlewares");
 const { categorySchema } = require("../schemas");
 const {
   allCategories,
-  allCategories,
   getCategory,
   postCategory,
   updateCategory,
