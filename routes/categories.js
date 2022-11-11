@@ -1,21 +1,41 @@
 const express = require("express");
-const { validate } = require("../middlewares");
+const { validate, ownership } = require("../middlewares");
 const { categorySchema } = require("../schemas");
 const {
-    allCategories,
+  allCategories,
   getCategory,
   postCategory,
   updateCategory,
   deleteCategory
 } = require("../controllers/category.controller");
+const checkUserId = require("../middlewares/checkUserId");
 
 const router = express.Router();
 
 //Crud - Categorias
-router.get("/category", allCategories);
-router.get("/:id", getCategory);
+router.get("/category", ownership(), allCategories);
+router.get("/:id",
+  [
+    checkUserId,
+    ownership()
+  ],
+  getCategory
+);
 router.post("/", validate(categorySchema), postCategory);
-router.patch("/:id", validate(categorySchema), updateCategory);
-router.delete("/:id", validate(categorySchema), deleteCategory)
+router.patch("/:id",
+  [
+    checkUserId,
+    validate(categorySchema),
+    ownership()
+  ],
+  updateCategory
+);
+router.delete("/:id",
+  [
+    checkUserId,
+    ownership()
+  ],
+  deleteCategory
+);
 
 module.exports = router;

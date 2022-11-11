@@ -3,6 +3,7 @@ const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
 const createHttpError = require("http-errors");
 const createUrlPreviousAndNext = require("../utils/create-url-previous-next");
+const { JWT } = require("../config/jwt");
 
 //CRUD pattern
 const transactionsController = {
@@ -24,7 +25,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions recived succefull",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
         options,
       });
     } catch (error) {
@@ -45,7 +46,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transaction recived succefull",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -70,7 +71,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions created succefull",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -92,7 +93,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions deleted succefull",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -121,7 +122,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions updated succefull",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(

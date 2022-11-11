@@ -6,6 +6,7 @@ const { ErrorObject } = require("../helpers/error");
 const { Security } = require("../config/security");
 const { response } = require("express");
 const createUrlPreviousAndNext = require("../utils/create-url-previous-next");
+const { JWT } = require("../config/jwt");
 
 module.exports = {
   allUsers: catchAsync(async (req, res, next) => {
@@ -27,7 +28,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User retrieved successfully",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
         options: options,
       });
     } catch (error) {
@@ -44,7 +45,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User retrieved successfully",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -67,7 +68,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User created",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -96,7 +97,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User edited",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -115,7 +116,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User eliminated",
-        body: response,
+        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
       const httpError = createHttpError(
