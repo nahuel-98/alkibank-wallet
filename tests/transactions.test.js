@@ -3,6 +3,7 @@ const db = require("../database/models");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
 const [user1] = require("../utils/initialUser");
+const { JWT } = require("../config/jwt")
 
 var token;
 before(async () => {
@@ -24,6 +25,7 @@ describe("Alkibank Wallet", () => {
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
+        expect(JWT.decode(response.body.body, process.env.SECRET_JWT_SEED).response).not.length(0)
       });
     });
     describe("GET /transactions/:id", () => {
@@ -73,7 +75,7 @@ describe("Alkibank Wallet", () => {
     xdescribe("DELETE /transactions", () => {
       it("Se espera un status code 200 si se elimina la transaccion", async () => {
         const response = await request
-          .delete(`/transactions/${197}`)
+          .delete(`/transactions/${198}`)
           .set({ "x-auth-token": `${token}` });
         
         expect(response.statusCode).to.eql(200)
