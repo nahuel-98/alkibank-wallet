@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { JWT } = require('../../config/jwt');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Role)
+    }
+    generateAuthToken() {
+      return JWT.encode({ id: this.id }, process.env.SECRET_WORD);
+    }
+    isAdmin() {
+      return this.roleId === 1;
     }
   };
   User.init({

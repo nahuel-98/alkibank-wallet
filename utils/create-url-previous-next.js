@@ -5,7 +5,7 @@ module.exports = function createUrlPreviousAndNext(
   req
 ) {
   let url = req.protocol + "://" + req.get("host") + req.baseUrl;
-  countPages = countPages > limit ? Math.round(countPages / limit - 1) : 0;
+  countPages = countPages > limit ? Math.ceil(countPages / limit - 1) : 0;
   let previous = page > 0 ? url + "?page=" + (page - 1) : null;
   previous = page - 1 > countPages ? url + "?page=" + countPages : previous;
   let next = page < countPages ? url + "?page=" + (page + 1) : null;
