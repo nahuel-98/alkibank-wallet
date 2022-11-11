@@ -81,3 +81,9 @@ describe("Alkibank Wallet", () => {
     });
   });
 });
+
+after(() => {
+  server.close(() => {
+    db.sequelize.close();
+  });
+});
