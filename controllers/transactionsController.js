@@ -10,10 +10,15 @@ const transactionsController = {
   //Read
   transactionList: catchAsync(async (req, res, next) => {
     try {
+      const { query } = req.query;
+      var whereStatement = {};
+      if (query) {
+        whereStatement = { userId: query };
+      }
       const limit = 10;
       const page = Number(req.query.page) || 0;
       let [response, countPages] = await Promise.all([
-        Transaction.findAll({ limit, offset: page * limit }),
+        Transaction.findAll({ limit, offset: page * limit, where: whereStatement }),
         Transaction.count(),
       ]);
       const options = createUrlPreviousAndNext(limit, countPages, page, req);

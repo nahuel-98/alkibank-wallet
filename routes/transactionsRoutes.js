@@ -1,12 +1,11 @@
 const express = require("express");
-const { ownershipTransaction } = require("../middlewares");
-const validate = require("../middlewares/validator");
+const { validate, auth, ownershipTransaction, ownership } = require("../middlewares");
 const { transactionSchema } = require("../schemas");
 const router = express.Router()
 const transactionsController = require("./../controllers/transactionsController")
 
 //list
-router.get("/", transactionsController.transactionList);
+router.get("/", [auth(), ownership('query')], transactionsController.transactionList);
 
 //detail
 router.get("/:id", ownershipTransaction(), transactionsController.transactionDetail);
