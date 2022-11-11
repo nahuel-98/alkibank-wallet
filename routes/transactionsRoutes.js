@@ -1,5 +1,5 @@
 const express = require("express");
-const { validate, auth, ownershipTransaction } = require("../middlewares");
+const { validate, auth, ownershipTransaction, ownership } = require("../middlewares");
 const { transactionSchema } = require("../schemas");
 const router = express.Router()
 const transactionsController = require("./../controllers/transactionsController")
@@ -66,7 +66,7 @@ const transactionsController = require("./../controllers/transactionsController"
  *        description: the record does not belong to you or User not logged in.
  *
  */
-router.get("/", transactionsController.transactionList);
+ router.get("/", [auth(), ownership('query')], transactionsController.transactionList);
 
 //detail
 /**
@@ -106,7 +106,7 @@ router.get("/", transactionsController.transactionList);
  *        description: Transaction not found
  *
  */
-router.get("/:id", [auth(), ownershipTransaction()], transactionsController.transactionDetail);
+ router.get("/:id", ownershipTransaction(), transactionsController.transactionDetail);
 /**
  * @swagger
  * /Transactions:
@@ -136,11 +136,7 @@ router.get("/:id", [auth(), ownershipTransaction()], transactionsController.tran
  *        description: the record does not belong to you or User not logged in.
  *
  */
-//create
-router.post("/",
-    validate(transactionSchema),
-    transactionsController.transactionCreate);
-
+router.post("/", validate(transactionSchema), transactionsController.transactionCreate);
 //delete
 /**
  * @swagger
@@ -172,8 +168,7 @@ router.post("/",
  *        description: Transaction not found
  *
  */
-
-router.delete("/:id", transactionsController.transactionDelete);
+router.delete("/:id", ownershipTransaction(), transactionsController.transactionDelete);
 /**
  * @swagger
  * /Transactions/{id}:
@@ -219,11 +214,14 @@ router.delete("/:id", transactionsController.transactionDelete);
  *      403:
  *        description: the record does not belong to you or User not logged in.
  *      404:
- *        description: Transaction not found
- *
+ *        description: Transaction not found *
  */
-//update
-router.put("/:id", transactionsController.transactionUpdate);
-
+router.put("/:id",
+    [
+        validate(transactionSchema),
+        ownershipTransaction()
+    ],
+    transactionsController.transactionUpdate
+);
 
 module.exports = router;
