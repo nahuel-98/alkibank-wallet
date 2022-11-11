@@ -1,6 +1,5 @@
 const initialUser = [
   {
-    id: 1,
     firstName: "Pablo Oscar",
     lastName: "Chavez",
     email: "pablooscarchavez@gmail.com",
