@@ -19,7 +19,7 @@ router.get("/:id", [checkUserId, auth(), ownership()], idUser);
 
 router.post("", validate(userSchema), createUser);
 
-router.put("/:id", checkUserId, editUser);
+router.patch("/:id", checkUserId, editUser); // ownership ?
 
 router.delete("/:id", checkUserId, deleteUser);
 
