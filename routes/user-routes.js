@@ -13,13 +13,7 @@ const { ownership, auth } = require("../middlewares");
 
 const router = express.Router();
 
-router.get("",
-  [
-    checkUserId,
-    auth()
-  ],
-  allUsers
-);
+router.get("", auth(), allUsers);
 
 router.get("/:id",
   [
