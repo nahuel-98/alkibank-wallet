@@ -14,28 +14,9 @@ const router = express.Router();
 
 //Crud - Categorias
 router.get("/category", ownership(), allCategories);
-router.get("/:id",
-  [
-    checkUserId,
-    ownership()
-  ],
-  getCategory
-);
+router.get("/:id", getCategory );
 router.post("/", validate(categorySchema), postCategory);
-router.patch("/:id",
-  [
-    checkUserId,
-    validate(categorySchema),
-    ownership()
-  ],
-  updateCategory
-);
-router.delete("/:id",
-  [
-    checkUserId,
-    ownership()
-  ],
-  deleteCategory
-);
+router.patch("/:id",validate(categorySchema), updateCategory );
+router.delete("/:id", deleteCategory );
 
 module.exports = router;
