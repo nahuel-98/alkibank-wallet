@@ -27,7 +27,7 @@ describe("Alkibank Wallet", () => {
           password: user1.password,
         });
 
-        token = response.body.body.token
+        token = response.body.body.token;
 
         expect(response.statusCode).to.eql(200);
       });
@@ -76,11 +76,10 @@ describe("Alkibank Wallet", () => {
       });
     });
   });
+});
 
-
-  after(() => {
-    server.close(() => {
-      db.sequelize.close();
-    });
+after(() => {
+  server.close(() => {
+    db.sequelize.close();
   });
 });
