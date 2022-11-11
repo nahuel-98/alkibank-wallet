@@ -49,7 +49,7 @@ module.exports = {
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving /users/id] - [user - GET]: ${error.message}`
+        `[Error retrieving /users/:id] - [user - GET]: ${error.message}`
       );
       next(httpError);
     }
@@ -58,15 +58,21 @@ module.exports = {
     try {
       const { firstName, lastName, email, password } = req.body;
       const encryptPassword = await Security.encryptPassword(password);
-      const response = await User.create({
-        firstName,
-        lastName,
-        email,
-        password: encryptPassword,
+      const [response, created] = await User.findOrCreate({
+        where: {
+          email
+        },
+        defaults: {
+          firstName,
+          lastName,
+          email,
+          password: encryptPassword,
+        }
       });
       endpointResponse({
         res,
-        message: "User created",
+        code: created ? 201 : 200,
+        message: created ? "User created" : "Email provided already existing",
         body: response,
       });
     } catch (error) {
