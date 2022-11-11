@@ -10,7 +10,7 @@ var token;
 describe("Alkibank Wallet", () => {
   describe("Users", () => {
     describe("POST /users", () => {
-      it("Se espera un registro exitoso", async () => {
+      it("Se espera un status code 201 para el registro, si el usuario existe se espera un status code 200", async () => {
         const response = await request.post("/users").send(user1);
 
         expect(response.statusCode).to.satisfy((code) => {
@@ -19,59 +19,60 @@ describe("Alkibank Wallet", () => {
           }
         });
       });
-      describe("POST /auth/login", () => {
-        it("Se espera un login exitoso", async () => {
-          const response = await request.post("/auth/login").send({
-            email: user1.email,
-            password: user1.password,
-          });
-
-          token = response.body.body.token;
-
-          expect(response.statusCode).to.eql(200);
+    });
+    describe("POST /auth/login", () => {
+      it("Se espera un status code 200 para un login exitoso", async () => {
+        const response = await request.post("/auth/login").send({
+          email: user1.email,
+          password: user1.password,
         });
+
+        token = response.body.body.token;
+
+        expect(response.statusCode).to.eql(200);
       });
-      describe("GET /users", () => {
-        it("Se espera que existan usuarios", async () => {
-          const response = await request
-            .get(`/users`)
-            .set({ "x-auth-token": `${token}` });
+    });
+    describe("GET /users", () => {
+      it("Se espera que existan usuarios", async () => {
+        const response = await request
+          .get(`/users`)
+          .set({ "x-auth-token": `${token}` });
 
-          expect(response.statusCode).to.eql(200);
-        });
+        expect(response.statusCode).to.eql(200);
+        expect(response.body.body).not.length(0);
       });
-      describe("GET /users/:id", () => {
-        it("Se espera encontrar el usuario", async () => {
-          const response = await request
-            .get(`/users/${81}`)
-            .set({ "x-auth-token": `${token}` });
+    });
+    describe("GET /users/:id", () => {
+      it("Se espera un status code 200 si se encuentra el usuario", async () => {
+        const response = await request
+          .get(`/users/${89}`)
+          .set({ "x-auth-token": `${token}` });
 
-          expect(response.statusCode).to.eql(200);
-        });
+        expect(response.statusCode).to.eql(200);
       });
-      describe("PATCH /users/:id", () => {
-        const userUpdate = {
-          firstName: "Pablizinho",
-          lastName: "Mourinho",
-          email: "pablizinho187@gmail.com",
-        };
-        it("Se espera actualizar el usuario", async () => {
-          const response = await request
-            .patch(`/users/${4}`)
-            .send(userUpdate)
-            .set({ "x-auth-token": `${token}` });
+    });
+    describe("PATCH /users/:id", () => {
+      const userUpdate = {
+        firstName: "Pablizinho",
+        lastName: "Mourinho",
+        email: "pablizinho187@gmail.com",
+      };
+      it("Se espera un status code 200 si se actualiza el usuario", async () => {
+        const response = await request
+          .patch(`/users/${4}`)
+          .send(userUpdate)
+          .set({ "x-auth-token": `${token}` });
 
-          expect(response.statusCode).to.eql(200);
-        });
+        expect(response.statusCode).to.eql(200);
       });
-      describe("DELETE /users/:id", () => {
-        it("Se espera eliminar al usuario", async () => {
-          const response = await request
-            .delete(`/users/${8}`)
-            .set({ "x-auth-token": `${token}` });
+    });
+    describe("DELETE /users/:id", () => {
+      it("Se espera un status code 200 si se elimina el usuario", async () => {
+        const response = await request
+          .delete(`/users/${10}`)
+          .set({ "x-auth-token": `${token}` });
 
-          expect(response.statusCode).to.eql(200);
-        });
+        expect(response.statusCode).to.eql(200);
       });
     });
   });
