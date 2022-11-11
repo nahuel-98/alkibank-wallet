@@ -1,6 +1,6 @@
 const express = require("express");
 const { get, post } = require("../controllers/index");
-const { validate } = require("../middlewares");
+const { validate, auth } = require("../middlewares");
 const { testSchema } = require("../schemas");
 const userRouter = require("./user-routes");
 const imagesRouter = require("./images.routes.js")
@@ -15,10 +15,10 @@ router.get("/", get);
 // example of a route with index controller post function
 router.post("/", validate(testSchema), post);
 
-router.use("/transactions",transactionsRoutes);
+router.use("/transactions", auth(), transactionsRoutes);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/categories", categoriesRouter);
-router.use("/images" , imagesRouter);
+router.use("/category", auth(), categoriesRouter);
+router.use("/images" , auth(), imagesRouter);
 
 module.exports = router;
