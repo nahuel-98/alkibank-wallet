@@ -94,11 +94,11 @@ module.exports = {
       await User.update(
         { firstName, lastName, email },
         {
-          where: { id: id },
+          where: { id },
         }
       );
       const response = await User.findAll({
-        where: { id: id },
+        where: { id },
         attributes: ["firstName", "lastName", "email"],
       });
       endpointResponse({
