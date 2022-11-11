@@ -76,7 +76,7 @@ const router = express.Router();
  *        description: the record does not belong to you or User not logged in.
  *
  */
-router.get("", allUsers);
+ router.get("", auth(), allUsers);
 /**
  * @swagger
  * /User/{id}:
@@ -114,7 +114,14 @@ router.get("", allUsers);
  *        description: User not found
  *
  */
-router.get("/:id", [checkUserId, auth(), ownership()], idUser);
+ router.get("/:id",
+ [
+   checkUserId,
+   auth(),
+   ownership()
+ ],
+ idUser
+);
 /**
  * @swagger
  * /User:
@@ -144,7 +151,7 @@ router.get("/:id", [checkUserId, auth(), ownership()], idUser);
  *        description: the record does not belong to you or User not logged in.
  *
  */
-router.post("", validate(userSchema), createUser);
+ router.post("", validate(userSchema), createUser);
 /**
  * @swagger
  * /User/{id}:
@@ -194,7 +201,15 @@ router.post("", validate(userSchema), createUser);
  *        description: User not found
  *
  */
-router.put("/:id", checkUserId, editUser);
+ router.put("/:id",
+ [
+   checkUserId,
+   validate(userSchema),
+   auth(),
+   ownership()
+ ],
+ editUser
+);
 /**
  * @swagger
  * /User/{id}:
@@ -225,7 +240,13 @@ router.put("/:id", checkUserId, editUser);
  *        description: User not found
  *
  */
-
-router.delete("/:id", checkUserId, deleteUser);
+router.delete("/:id",
+  [
+    checkUserId,
+    auth(),
+    ownership()
+  ],
+  deleteUser
+);
 
 module.exports = router;
