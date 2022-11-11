@@ -1,5 +1,4 @@
 const { server } = require("../app");
-const { User } = require("../database/models");
 const db = require("../database/models");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
