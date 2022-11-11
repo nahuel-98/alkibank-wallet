@@ -26,6 +26,7 @@ module.exports = {
 
       endpointResponse({
         res,
+        code: response.length !== 0 ? 200 : 404,
         message: "User retrieved successfully",
         body: response,
         options: options,
