@@ -15,7 +15,8 @@ describe("Alkybank Wallet", () => {
     });
     describe("GET /categories/:id", () => {
       it("Se espera que se obtenga la categoria", async () => {
-        const response = await request.get(`/categories/${59}`);
+
+        const response = await request.get(`/categories/${1}`);
 
         expect(response.status).to.eql(200);
       });
@@ -47,8 +48,8 @@ describe("Alkybank Wallet", () => {
         const error = {
           description: "ErrorObject",
         };
-
-        const response = await request.patch(`/categories/${59}`).send(success);
+        
+        const response = await request.patch(`/categories/${2}`).send(success);
 
         expect(response.status).to.eql(200);
       });

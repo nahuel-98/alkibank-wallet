@@ -10,7 +10,8 @@ const validate = (schemas)  => {
     }
 
     const errors = result.array();
-    return  res.status(404).send(errors)
+
+    return  res.status(409).send(errors)
   };
 }
 

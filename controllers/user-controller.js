@@ -27,6 +27,7 @@ module.exports = {
 
       endpointResponse({
         res,
+        code: response.length !== 0 ? 200 : 404,
         message: "User retrieved successfully",
         body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
         options: options,
@@ -50,7 +51,7 @@ module.exports = {
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving /users/id] - [user - GET]: ${error.message}`
+        `[Error retrieving /users/:id] - [user - GET]: ${error.message}`
       );
       next(httpError);
     }
@@ -59,15 +60,21 @@ module.exports = {
     try {
       const { firstName, lastName, email, password } = req.body;
       const encryptPassword = await Security.encryptPassword(password);
-      const response = await User.create({
-        firstName,
-        lastName,
-        email,
-        password: encryptPassword,
+      const [response, created] = await User.findOrCreate({
+        where: {
+          email
+        },
+        defaults: {
+          firstName,
+          lastName,
+          email,
+          password: encryptPassword,
+        }
       });
       endpointResponse({
         res,
-        message: "User created",
+        code: created ? 201 : 200,
+        message: created ? "User created" : "Email provided already existing",
         body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
       });
     } catch (error) {
@@ -87,11 +94,11 @@ module.exports = {
       await User.update(
         { firstName, lastName, email },
         {
-          where: { id: id },
+          where: { id },
         }
       );
       const response = await User.findAll({
-        where: { id: id },
+        where: { id },
         attributes: ["firstName", "lastName", "email"],
       });
       endpointResponse({
