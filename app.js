@@ -65,11 +65,10 @@ app.use((err, req, res) => {
   res.render('error')
 })
 
-
-
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Servidor funcionando en el puerto ${port}`)
-})
-
-module.exports = app
+module.exports = {
+  server: app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`Servidor funcionando en el puerto ${port}`)
+  })
+  
+}
