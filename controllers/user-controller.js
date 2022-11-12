@@ -29,7 +29,7 @@ module.exports = {
         res,
         code: response.length !== 0 ? 200 : 404,
         message: "User retrieved successfully",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
         options: options,
       });
     } catch (error) {
@@ -46,7 +46,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User retrieved successfully",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -75,7 +75,7 @@ module.exports = {
         res,
         code: created ? 201 : 200,
         message: created ? "User created" : "Email provided already existing",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -104,7 +104,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User edited",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -123,7 +123,7 @@ module.exports = {
       endpointResponse({
         res,
         message: "User eliminated",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
