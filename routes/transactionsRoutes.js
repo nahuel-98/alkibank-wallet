@@ -46,7 +46,7 @@ const transactionsController = require("./../controllers/transactionsController"
  *    tags: [Transactions]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -83,7 +83,7 @@ const transactionsController = require("./../controllers/transactionsController"
  *          required: true
  *          description: Transaction Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -115,7 +115,7 @@ const transactionsController = require("./../controllers/transactionsController"
  *    tags: [Transactions]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -152,7 +152,7 @@ router.post("/", validate(transactionSchema), transactionsController.transaction
  *          required: true
  *          description: Transaction Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -183,7 +183,7 @@ router.delete("/:id", ownershipTransaction(), transactionsController.transaction
  *          required: true
  *          description: Transaction Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
