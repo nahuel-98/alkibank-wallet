@@ -4,6 +4,7 @@ const request = require("supertest")(server);
 const expect = require("chai").expect;
 const [user1] = require("../utils/initialUser");
 
+
 var token;
 before(async () => {
   const response = await request.post("/auth/login").send({
