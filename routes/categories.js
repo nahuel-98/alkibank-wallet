@@ -44,13 +44,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /category:
+ * /categories:
  *  get:
  *    summary: All Categories
  *    tags: [Category]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -73,7 +73,7 @@ const router = express.Router();
 router.get("", allCategories);
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *  get:
  *    summary: Category by id
  *    tags: [Category]
@@ -85,7 +85,7 @@ router.get("", allCategories);
  *          required: true
  *          description: Category Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -112,13 +112,13 @@ router.get("", allCategories);
 router.get("/:id", getCategory);
 /**
  * @swagger
- * /category:
+ * /categories:
  *  post:
  *    summary: Create Category
  *    tags: [Category]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -142,7 +142,7 @@ router.get("/:id", getCategory);
 router.post("/", validate(categorySchema), postCategory);
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *  patch:
  *    summary: Edit Category
  *    tags: [Category]
@@ -154,7 +154,7 @@ router.post("/", validate(categorySchema), postCategory);
  *          required: true
  *          description: Category Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -184,7 +184,7 @@ router.post("/", validate(categorySchema), postCategory);
 router.patch("/:id", validate(categorySchema), updateCategory);
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *  delete:
  *    summary: Delete Category
  *    tags: [Category]
@@ -196,7 +196,7 @@ router.patch("/:id", validate(categorySchema), updateCategory);
  *          required: true
  *          description: Category Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
