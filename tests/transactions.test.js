@@ -11,7 +11,6 @@ before(async () => {
     email: user1.email,
     password: user1.password,
   });
-  //id?
   token = response.body.body.token;
 });
 
@@ -21,7 +20,7 @@ describe("Alkibank Wallet", () => {
       it("Se espera un status code 200 si existen transacciones", async () => {
         const response = await request
           .get(`/transactions`)
-          .query({ query: 93 })
+          .query({ query: 94 })
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
@@ -31,8 +30,8 @@ describe("Alkibank Wallet", () => {
     describe("GET /transactions/:id", () => {
       it("Se espera un status code 200 si se encuentra la transaccion", async () => {
         const response = await request
-          .get(`/transactions/${190}`)
-          .query({ query: 93 })
+          .get(`/transactions/${236}`)
+          .query({ query: 94 })
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
@@ -42,7 +41,7 @@ describe("Alkibank Wallet", () => {
       const transaction = {
         description: "Compra camiseta",
         amount: 10000,
-        userId: 93,
+        userId: 94,
         categoryId: 2,
         date: new Date(),
       };
@@ -59,13 +58,13 @@ describe("Alkibank Wallet", () => {
       const transaction = {
         description: "Venta camiseta",
         amount: 12000,
-        userId: 93,
+        userId: 94,
         categoryId: 1,
         date: new Date(),
       };
       it("Se espera un status code 200 si se actualiza la transaccion", async () => {
         const response = await request
-          .patch(`/transactions/${196}`)
+          .patch(`/transactions/${236}`)
           .send(transaction)
           .set({ "x-auth-token": `${token}` });
         
