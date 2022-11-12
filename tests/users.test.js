@@ -23,8 +23,8 @@ describe("Alkibank Wallet", () => {
     describe("POST /auth/login", () => {
       it("Se espera un status code 200 para un login exitoso", async () => {
         const response = await request.post("/auth/login").send({
-          email: user1.email,
-          password: user1.password,
+          email: user2.email,
+          password: user2.password,
         });
 
         token = response.body.body.token;
@@ -55,7 +55,8 @@ describe("Alkibank Wallet", () => {
       const userUpdate = {
         firstName: "Pablizinho",
         lastName: "Mourinho",
-        email: "pablooscarchavez@gmail.com",
+        email: "jace.kuvalis@example.net",
+        password: 'password' // no deberia de pedir password 
       };
       it("Se espera un status code 200 si se actualiza el usuario", async () => {
         const response = await request
