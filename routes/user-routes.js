@@ -201,10 +201,11 @@ const router = express.Router();
  *        description: User not found
  *
  */
+
  router.patch("/:id",
  [
    checkUserId,
-  //  validate(userSchema),
+   validate(userSchema),
    auth(),
    ownership()
  ],

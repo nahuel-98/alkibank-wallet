@@ -3,7 +3,7 @@ const db = require("../database/models");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
 
-const [user1] = require("../utils/initialUser");
+const [user1, user2] = require("../utils/initialUser");
 
 var token;
 
@@ -45,7 +45,7 @@ describe("Alkibank Wallet", () => {
     describe("GET /users/:id", () => {
       it("Se espera un status code 200 si se encuentra el usuario", async () => {
         const response = await request
-          .get(`/users/${94}`)
+          .get(`/users/${2}`)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
@@ -59,23 +59,25 @@ describe("Alkibank Wallet", () => {
       };
       it("Se espera un status code 200 si se actualiza el usuario", async () => {
         const response = await request
-          .patch(`/users/${94}`)
+          .patch(`/users/${2}`)
           .send(userUpdate)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
       });
     });
+
     xdescribe("DELETE /users/:id", () => {
       it("Se espera un status code 200 si se elimina el usuario", async () => {
         const response = await request
-          .delete(`/users/${94}`)
+          .delete(`/users/${2}`)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
       });
     });
   });
+
 });
 
 after(() => {

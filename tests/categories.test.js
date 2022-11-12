@@ -15,6 +15,7 @@ before(async () => {
   token = response.body.body.token;
 });
 
+
 describe("Alkybank Wallet", () => {
   describe("Category", () => {
     describe("GET /categories", () => {
