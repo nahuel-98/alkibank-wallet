@@ -18,7 +18,7 @@ router.post("/", validate(testSchema), post);
 router.use("/transactions", auth(), transactionsRoutes);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/category", auth(), categoriesRouter);
+router.use("/categories", auth(), categoriesRouter);
 router.use("/images" , auth(), imagesRouter);
 
 module.exports = router;

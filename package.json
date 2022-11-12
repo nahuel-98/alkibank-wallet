@@ -39,8 +39,6 @@
     "sequelize-cli": "6.2.0",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.6.0",
-    "ejs": "^2.6.1",
-    "multer": "^1.4.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -216,7 +216,8 @@ router.delete("/:id", ownershipTransaction(), transactionsController.transaction
  *      404:
  *        description: Transaction not found *
  */
-router.put("/:id",
+
+router.patch("/:id",
     [
         validate(transactionSchema),
         ownershipTransaction()
