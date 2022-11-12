@@ -201,10 +201,10 @@ const router = express.Router();
  *        description: User not found
  *
  */
- router.put("/:id",
+ router.patch("/:id",
  [
    checkUserId,
-   validate(userSchema),
+  //  validate(userSchema),
    auth(),
    ownership()
  ],
@@ -248,5 +248,6 @@ router.delete("/:id",
   ],
   deleteUser
 );
+
 
 module.exports = router;
