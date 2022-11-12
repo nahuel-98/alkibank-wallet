@@ -45,7 +45,7 @@ describe("Alkibank Wallet", () => {
     describe("GET /users/:id", () => {
       it("Se espera un status code 200 si se encuentra el usuario", async () => {
         const response = await request
-          .get(`/users/${93}`)
+          .get(`/users/${94}`)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
@@ -59,7 +59,7 @@ describe("Alkibank Wallet", () => {
       };
       it("Se espera un status code 200 si se actualiza el usuario", async () => {
         const response = await request
-          .patch(`/users/${93}`)
+          .patch(`/users/${94}`)
           .send(userUpdate)
           .set({ "x-auth-token": `${token}` });
 
@@ -69,7 +69,7 @@ describe("Alkibank Wallet", () => {
     xdescribe("DELETE /users/:id", () => {
       it("Se espera un status code 200 si se elimina el usuario", async () => {
         const response = await request
-          .delete(`/users/${93}`)
+          .delete(`/users/${94}`)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.statusCode).to.eql(200);
