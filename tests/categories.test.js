@@ -4,7 +4,6 @@ const request = require("supertest")(server);
 const expect = require("chai").expect;
 
 describe("Alkybank Wallet", () => {
-describe("Alkybank Wallet", () => {
   describe("Category", () => {
     describe("GET /categories", () => {
       it("Se espera que haya categorias", async () => {
@@ -16,6 +15,7 @@ describe("Alkybank Wallet", () => {
     });
     describe("GET /categories/:id", () => {
       it("Se espera que se obtenga la categoria", async () => {
+
         const response = await request.get(`/categories/${1}`);
 
         expect(response.status).to.eql(200);
