@@ -7,7 +7,6 @@ const initialUser = [
     roleId: 1,
   },
   {
-    id: 2,
     firstName: 'Gregoria',
     lastName: 'Durgan',
     email: 'jace.kuvalis@example.net',

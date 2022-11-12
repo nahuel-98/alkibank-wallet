@@ -2,16 +2,16 @@ const { server } = require("../app");
 const db = require("../database/models");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
-const [user1] = require("../utils/initialUser");
+const [user1,user2] = require("../utils/initialUser");
 
 
 var token;
 before(async () => {
   const response = await request.post("/auth/login").send({
-    email: user1.email,
-    password: user1.password,
+    email: user2.email,
+    password: user2.password,
   });
-  //id?
+
   token = response.body.body.token;
 });
 
@@ -80,7 +80,7 @@ describe("Alkybank Wallet", () => {
       it("Se espera un status 200 al eliminar la categoria", async () => {
 
         const response = await request
-          .delete(`/categories/${77}`)
+          .delete(`/categories/${2}`)
           .set({ "x-auth-token": `${token}` });
 
         expect(response.status).to.eql(200);
