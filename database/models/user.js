@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Role)
     }
     generateAuthToken() {
-      return JWT.encode({ id: this.id }, process.env.SECRET_WORD);
+      return JWT.encode({ id: this.id });
     }
     isAdmin() {
       return this.roleId === 1;

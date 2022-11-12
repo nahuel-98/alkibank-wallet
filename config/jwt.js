@@ -1,26 +1,25 @@
 const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET_JWT_SEED;
 
 class JWT {
   /**
    *
    * @param {*} dataForToken payload to encode
-   * @param {*} secretWord it is recommended that it be an environment variable
    */
-  static encode(dataForToken, secretWord) {
-    if (!dataForToken || !secretWord) {
-      throw new Error("Arguments missing");
+  static encode(dataForToken) {
+    if (!dataForToken) {
+      throw new Error("Argument missing");
     }
-    return jwt.sign(dataForToken, secretWord);
+    return jwt.sign(dataForToken, secret);
   }
 
   /**
    *
    * @param {*} token the token previously generated with encode
-   * @param {*} secretWord the secret word i use to encode
    */
-  static verify(token, secretWord) {
+  static verify(token) {
     try {
-      if (jwt.verify(token, secretWord)) {
+      if (jwt.verify(token, secret)) {
         return "El token es valido";
       }
       return;
@@ -32,12 +31,11 @@ class JWT {
   /**
    *
    * @param {*} token the token previously generated with encode
-   * @param {*} secretWord the secret word i use to encode
    */
-  static decode(token, secretWord) {
+  static decode(token) {
     let decodedToken;
     try {
-      decodedToken = jwt.verify(token, secretWord);
+      decodedToken = jwt.verify(token, secret);
       return decodedToken;
     } catch (error) {
       throw Error("El token es invalido");

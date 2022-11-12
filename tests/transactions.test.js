@@ -25,7 +25,7 @@ describe("Alkibank Wallet", () => {
           .set({ "x-auth-token": `${token}` });
         
         expect(response.statusCode).to.eql(200);
-        expect(JWT.decode(response.body.body, process.env.SECRET_JWT_SEED).response).not.length(0)
+        expect(JWT.decode(response.body.body).response).not.length(0)
       });
     });
     describe("GET /transactions/:id", () => {

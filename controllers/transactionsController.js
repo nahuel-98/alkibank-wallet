@@ -25,7 +25,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions recived succefull",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
         options,
       });
     } catch (error) {
@@ -46,7 +46,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transaction recived succefull",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -71,7 +71,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions created succefull",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -93,7 +93,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions deleted succefull",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
@@ -122,7 +122,7 @@ const transactionsController = {
       endpointResponse({
         res,
         message: "transactions updated succefull",
-        body: JWT.encode({response}, process.env.SECRET_JWT_SEED),
+        body: JWT.encode({response}),
       });
     } catch (error) {
       const httpError = createHttpError(
