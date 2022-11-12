@@ -50,13 +50,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /User:
+ * /users:
  *  get:
  *    summary: All Users
  *    tags: [User]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -79,7 +79,7 @@ const router = express.Router();
  router.get("", auth(), allUsers);
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *  get:
  *    summary: User by id
  *    tags: [User]
@@ -91,7 +91,7 @@ const router = express.Router();
  *          required: true
  *          description: User Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -124,13 +124,13 @@ const router = express.Router();
 );
 /**
  * @swagger
- * /User:
+ * /users:
  *  post:
  *    summary: Create User
  *    tags: [User]
  *    parameters:
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -154,7 +154,7 @@ const router = express.Router();
  router.post("", validate(userSchema), createUser);
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *  patch:
  *    summary: Edit User
  *    tags: [User]
@@ -166,7 +166,7 @@ const router = express.Router();
  *          required: true
  *          description: User Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
@@ -213,7 +213,7 @@ const router = express.Router();
 );
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *  delete:
  *    summary: Delete User
  *    tags: [User]
@@ -225,7 +225,7 @@ const router = express.Router();
  *          required: true
  *          description: User Id
  *      - in: header
- *        name: x-access-token
+ *        name: x-auth-token
  *        schema:
  *          type: string
  *        required: true
