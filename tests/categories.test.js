@@ -3,7 +3,8 @@ const db = require("../database/models");
 const request = require("supertest")(server);
 const expect = require("chai").expect;
 
-xdescribe("Alkybank Wallet", () => {
+describe("Alkybank Wallet", () => {
+describe("Alkybank Wallet", () => {
   describe("Category", () => {
     describe("GET /categories", () => {
       it("Se espera que haya categorias", async () => {
@@ -47,7 +48,7 @@ xdescribe("Alkybank Wallet", () => {
         const error = {
           description: "ErrorObject",
         };
-
+        
         const response = await request.patch(`/categories/${2}`).send(success);
 
         expect(response.status).to.eql(200);

@@ -108,6 +108,7 @@ router.get("", allCategories);
  *        description: category not found
  *
  */
+ 
 router.get("/:id", getCategory);
 /**
  * @swagger
